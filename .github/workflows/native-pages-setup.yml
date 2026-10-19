@@ -1,0 +1,30 @@
+name: PagesのGit連携設定
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Git連携の初期設定または状態確認
+        type: choice
+        options: [ensure, inspect]
+        default: ensure
+
+permissions:
+  contents: read
+
+jobs:
+  configure:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: cloudflare-pages-production
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+      - name: Pages専用接続でGit連携を設定・確認
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PAGES_SETUP_MODE: ${{ inputs.mode }}
+        run: node scripts/configure-native-pages.mjs "$PAGES_SETUP_MODE"
