@@ -33,7 +33,11 @@ npm run build
 
 `dist/` に公開用ファイルが出力されます。`site/` は2026年10月20日の公開用静的HTMLを元にした表示用ベースです。元のAstroプロジェクトのソース一式ではありません。ビルドは `translations/` の訳文を反映し、既存の対訳・訳注・人名地名解説を保持します。既知の名称の解説ボタンは修正文にも付け直します。
 
-Cloudflare Pagesの既存プロジェクトはDirect Upload方式です。PRのマージだけでは本番に自動公開されません。管理者が検証後に `dist/` をPagesプロジェクト `belisarius` の `main` にデプロイします。カクヨムへの反映も別途行います。
+**PRを `main` にマージすると、GitHub Actionsが検証・ビルドを実行し、Cloudflare Pagesの本番サイトに自動公開します。** 検証が失敗した場合は公開しません。PRの段階では本文の検証だけを行います。
+
+自動公開は `.github/workflows/deploy.yml` に定義しています。接続情報はGitHubの `cloudflare-pages-production` 環境のSecretsに保存し、その環境で公開できるブランチは `main` に限定しています。手動でやり直す場合は、Actionsの「Cloudflare Pages 本番公開」からRun workflowを実行してください。
+
+この自動公開の対象は対訳サイトです。カクヨムへの反映は別途行います。
 
 ## 出典と利用条件
 
