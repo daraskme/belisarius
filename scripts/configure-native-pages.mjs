@@ -18,7 +18,11 @@ try{project=await request('/'+projectName);}catch(e){
  if(mode!=='ensure'||e.status!==404)throw e;
  const body={name:projectName,production_branch:'main',build_config:{build_command:'npm run check',destination_dir:'dist',root_dir:''},
   source:{type:'github',config:{owner:'daraskme',owner_id:'102633287',repo_name:'belisarius',repo_id:'1425866995',production_branch:'main',production_deployments_enabled:true,deployments_enabled:true,pr_comments_enabled:true,path_includes:['*'],path_excludes:[],preview_deployment_setting:'all',preview_branch_includes:['*'],preview_branch_excludes:[]}},
-  deployment_configs:{production:{env_vars:{NODE_VERSION:{type:'plain_text',value:'24'}}},preview:{env_vars:{NODE_VERSION:{type:'plain_text',value:'24'}}}};
+  deployment_configs:{
+   production:{env_vars:{NODE_VERSION:{type:'plain_text',value:'24'}}},
+   preview:{env_vars:{NODE_VERSION:{type:'plain_text',value:'24'}}}
+  }
+ };
  project=await request('',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
  console.log('GitHub連携付きPagesプロジェクトを作成しました: '+project.name);
 }
