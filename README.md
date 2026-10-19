@@ -2,7 +2,7 @@
 
 六世紀の歴史家プロコピオスによる『戦史』全8巻・243章・7,240節の日本語訳と、ギリシャ語原典・H. B. Dewing英訳の対訳サイトです。
 
-- [全文・対訳サイト](https://belisarius-git.pages.dev/)
+- [全文・対訳サイト](https://belisarius.darask.me/)
 - [カクヨム連載](https://kakuyomu.jp/works/11054822665012517931)（2026年10月20日から毎日18:00、日本時間）
 
 ## AI翻訳と修正提案
@@ -46,7 +46,9 @@ Cloudflareの設定は次のとおりです。
 | 出力先 | `dist` |
 | Node.js | 24 |
 
-旧URL `https://belisarius.pages.dev/` は、新サイトへパスを引き継いで301転送します。`.github/workflows/deploy.yml` は旧サイトの転送設定を手動で再公開するためのものです。通常の更新には実行不要です。Git連携の初期設定・状態確認はActionsの「PagesのGit連携設定」から実行できます。
+公開ドメインは `belisarius.darask.me` です。Pagesの `belisarius-git` プロジェクトのCustom domainsとDNSに登録し、HTTPSでの応答を確認しています。既存のGit連携・ビルド先を引き継ぎます。
+
+旧URL `https://belisarius.pages.dev/` は、新サイトへパスを引き継いで301転送します。`.github/workflows/deploy.yml` は旧サイトの転送設定を手動で再公開するためのものです。カスタムドメインの有効化後に実行すると、旧URLから新ドメインへ直接転送します。通常の本文更新には実行不要です。Git連携の初期設定・状態確認はActionsの「PagesのGit連携設定」から実行できます。
 
 この自動公開の対象は対訳サイトです。カクヨムへの反映は別途行います。
 

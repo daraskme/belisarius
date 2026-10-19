@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {configureDomain} from './site-domain.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const esc=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 export function text(html){return html.replace(/<[^>]+>/g,'').replace(/&(#x[\da-f]+|#\d+|amp|quot|apos|lt|gt|nbsp);/gi,(m,e)=>e.startsWith('#x')?String.fromCodePoint(parseInt(e.slice(2),16)):e.startsWith('#')?String.fromCodePoint(Number(e.slice(1))):({amp:'&',quot:'"',apos:"'",lt:'<',gt:'>',nbsp:'\u00a0'})[e]).trim();}
@@ -31,6 +32,7 @@ export async function build(){
   await fs.writeFile(file,html);
  }
  if(sections!==7240)throw Error(`節数が不一致: ${sections}`);
+ await configureDomain(dist);
  console.log(`8巻・243章・${sections}節をビルド（本文更新 ${edited} 節）`);
  return dist;
 }
