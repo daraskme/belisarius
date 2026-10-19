@@ -9,3 +9,4 @@
 - カクヨムでは補遺を追加公開し、予約済みの該当章も更新。連載予約は維持。
 - 公開リポジトリと節ごとの日本語データを整備し、原文に基づく修正PRの受付を開始。
 - PRをmainにマージしたら、検証・ビルド後にCloudflare Pages本番へ自動公開するGitHub Actionsを追加。
+- 新しいPagesプロジェクト `belisarius-git` を作成し、Cloudflare標準のGitHub連携へ移行。通常の公開はPages側のGit連携で実行し、旧URLは新サイトへ301転送。

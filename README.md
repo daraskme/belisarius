@@ -2,7 +2,7 @@
 
 六世紀の歴史家プロコピオスによる『戦史』全8巻・243章・7,240節の日本語訳と、ギリシャ語原典・H. B. Dewing英訳の対訳サイトです。
 
-- [全文・対訳サイト](https://belisarius.pages.dev/)
+- [全文・対訳サイト](https://belisarius-git.pages.dev/)
 - [カクヨム連載](https://kakuyomu.jp/works/11054822665012517931)（2026年10月20日から毎日18:00、日本時間）
 
 ## AI翻訳と修正提案
@@ -33,9 +33,20 @@ npm run build
 
 `dist/` に公開用ファイルが出力されます。`site/` は2026年10月20日の公開用静的HTMLを元にした表示用ベースです。元のAstroプロジェクトのソース一式ではありません。ビルドは `translations/` の訳文を反映し、既存の対訳・訳注・人名地名解説を保持します。既知の名称の解説ボタンは修正文にも付け直します。
 
-**PRを `main` にマージすると、GitHub Actionsが検証・ビルドを実行し、Cloudflare Pagesの本番サイトに自動公開します。** 検証が失敗した場合は公開しません。PRの段階では本文の検証だけを行います。
+**PRを `main` にマージすると、Cloudflare Pagesの標準Git連携が検証・ビルドを実行し、本番サイトに自動公開します。** 検証が失敗した場合は公開しません。PRの段階ではGitHub Actionsの本文検証とCloudflareのプレビューを利用できます。
 
-自動公開は `.github/workflows/deploy.yml` に定義しています。接続情報はGitHubの `cloudflare-pages-production` 環境のSecretsに保存し、その環境で公開できるブランチは `main` に限定しています。手動でやり直す場合は、Actionsの「Cloudflare Pages 本番公開」からRun workflowを実行してください。
+Cloudflareの設定は次のとおりです。
+
+| 項目 | 設定 |
+| --- | --- |
+| Pagesプロジェクト | `belisarius-git` |
+| Gitリポジトリ | `daraskme/belisarius` |
+| 本番ブランチ | `main` |
+| ビルドコマンド | `npm run check` |
+| 出力先 | `dist` |
+| Node.js | 24 |
+
+旧URL `https://belisarius.pages.dev/` は、新サイトへパスを引き継いで301転送します。`.github/workflows/deploy.yml` は旧サイトの転送設定を手動で再公開するためのものです。通常の更新には実行不要です。Git連携の初期設定・状態確認はActionsの「PagesのGit連携設定」から実行できます。
 
 この自動公開の対象は対訳サイトです。カクヨムへの反映は別途行います。
 
