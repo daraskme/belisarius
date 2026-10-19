@@ -1,8 +1,6 @@
-name: Cloudflare Pages 本番公開
+name: 旧Pagesを新サイトへ転送
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -19,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: cloudflare-pages-production
-      url: https://belisarius.pages.dev/
+      url: https://belisarius-git.pages.dev/
     steps:
       - name: ソースを取得
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -27,9 +25,9 @@ jobs:
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
-      - name: 全巻の訳文を検証してビルド
-        run: npm run check
-      - name: Cloudflare Pagesに公開
+      - name: 旧URLからの転送を準備
+        run: node scripts/build-legacy-redirect.mjs
+      - name: 旧Pagesへ転送設定を公開
         id: deploy
         uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4
         with:
@@ -37,4 +35,4 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           wranglerVersion: '4.151.2'
-          command: pages deploy dist --project-name=belisarius --branch=main
+          command: pages deploy legacy-redirect --project-name=belisarius --branch=main
